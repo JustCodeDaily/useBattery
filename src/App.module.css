@@ -67,25 +67,29 @@
 }
 
 .footer {
-  font-size: 11px;
-  color: var(--text-3);
-  text-align: center;
-  line-height: 1.7;
-  padding: 4px 10px 0;
+  display: flex;
+  justify-content: center;
+  padding: 8px 10px 0;
 }
 
-.footer code {
+.githubBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
   color: var(--text-2);
+  text-decoration: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 1px solid var(--border-mid);
+  background: var(--surface-2);
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
 }
 
-.footer a {
-  color: var(--text-2);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  transition: color 0.15s;
-}
-
-.footer a:hover {
+.githubBtn:hover {
+  border-color: rgba(255, 255, 255, 0.22);
   color: var(--text-1);
+  background: var(--surface-3);
 }
