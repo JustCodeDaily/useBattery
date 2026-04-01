@@ -1,0 +1,41 @@
+.block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+
+.blockLabel {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 14px;
+}
+
+.code {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 2;
+}
+
+.line {
+  display: block;
+}
+
+.indent {
+  display: inline-block;
+  width: 1.6em;
+}
+
+.brace { color: var(--text-3); }
+.key   { color: var(--blue); }
+.colon { color: var(--text-3); }
+.comma { color: var(--text-3); }
+.true  { color: var(--green); }
+.false { color: var(--red); }
+.null  { color: var(--text-3); font-style: italic; }
+.num   { color: var(--amber); }
+.inf   { color: var(--text-2); font-style: italic; }

@@ -1,121 +1,71 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { BatteryVisual } from './components/BatteryVisual'
+import { StatGrid } from './components/StatGrid'
+import { StateDisplay } from './components/StateDisplay'
+import { SimulatorControls } from './components/SimulatorControls'
+import styles from './App.module.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [levelPct, setLevelPct] = useState(72)
+  const [charging, setCharging] = useState(false)
+  const [supported, setSupported] = useState(true)
+
+  const level           = supported ? levelPct / 100 : null
+  const chargingTime    = supported ? (charging  ? Math.round((1 - level) * 5400) : Infinity) : null
+  const dischargingTime = supported ? (!charging ? Math.round(level * 7200)       : Infinity) : null
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
+    <div className={styles.app}>
+      <header className={styles.header}>
+        <h1 className={styles.hookName}>
+          <span className={styles.accent}>use</span>
+          Battery
+          <span className={styles.accent}>()</span>
+        </h1>
+        <span className={styles.badge}>Hook Preview</span>
+      </header>
+
+      <section className={supported ? styles.card : `${styles.card} ${styles.dimmed}`}>
+        <p className={styles.cardLabel}>Battery State</p>
+        <BatteryVisual level={level} charging={charging} supported={supported} />
+        <StatGrid charging={charging} chargingTime={chargingTime} dischargingTime={dischargingTime} supported={supported} />
       </section>
 
-      <div className="ticks"></div>
+      {!supported && (
+        <p className={styles.unsupportedMsg}>
+          supported: false — hook returns null for all battery values
+        </p>
+      )}
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      <StateDisplay
+        supported={supported}
+        loading={false}
+        level={level}
+        charging={supported ? charging : null}
+        chargingTime={chargingTime}
+        dischargingTime={dischargingTime}
+      />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+      <SimulatorControls
+        level={levelPct}
+        charging={charging}
+        supported={supported}
+        onLevel={(v) => setLevelPct(v)}
+        onCharge={() => setCharging((c) => !c)}
+        onSupport={() => setSupported((s) => !s)}
+      />
+
+      <footer className={styles.footer}>
+        <p>
+          Simulated — Battery API is blocked in sandboxed environments.
+          <br />
+          In a real browser, <code>useBattery()</code> reads live device values.
+          <br />
+          <a href="https://developer.mozilla.org/en-US/docs/Web/API/Battery_Status_API" target="_blank" rel="noreferrer">MDN Docs →</a>
+          {' · '}
+          <a href="https://caniuse.com/battery-status" target="_blank" rel="noreferrer">Can I Use →</a>
+        </p>
+      </footer>
+    </div>
   )
 }
-
-export default App
