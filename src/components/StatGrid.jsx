@@ -7,7 +7,7 @@ function fmtTime(secs) {
   return h > 0 ? `${h}h ${m}m` : `${m}m`
 }
 
-export function StatGrid({ charging, chargingTime, dischargingTime, supported }) {
+export function StatGrid({ charging, supported }) {
   const stats = [
     {
       label: 'Charging',
@@ -18,15 +18,7 @@ export function StatGrid({ charging, chargingTime, dischargingTime, supported })
         : charging
         ? 'Yes ⚡'
         : 'No',
-    },
-    {
-      label: 'Charge in',
-      value: !supported ? 'N/A' : fmtTime(chargingTime),
-    },
-    {
-      label: 'Empty in',
-      value: !supported ? 'N/A' : fmtTime(dischargingTime),
-    },
+    }
   ]
 
   return (

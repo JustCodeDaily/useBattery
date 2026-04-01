@@ -20,21 +20,9 @@ function cls(val) {
   return 'num'
 }
 
-export function StateDisplay({ supported, loading, level, charging, chargingTime, dischargingTime }) {
+export function StateDisplay({ supported, loading, level, charging }) {
   const lvlDisplay = level !== null ? level.toFixed(2) : 'null'
   const chgDisplay = charging !== null ? String(charging) : 'null'
-  const ctDisplay =
-    chargingTime !== null
-      ? isFinite(chargingTime)
-        ? String(chargingTime)
-        : 'Infinity'
-      : 'null'
-  const dtDisplay =
-    dischargingTime !== null
-      ? isFinite(dischargingTime)
-        ? String(dischargingTime)
-        : 'Infinity'
-      : 'null'
 
   return (
     <div className={styles.block}>
@@ -45,14 +33,6 @@ export function StateDisplay({ supported, loading, level, charging, chargingTime
         <Line propKey="loading" value={String(loading)} valueClass={cls(loading)} />
         <Line propKey="level" value={lvlDisplay} valueClass={cls(level)} />
         <Line propKey="charging" value={chgDisplay} valueClass={cls(charging)} />
-        <Line propKey="chargingTime" value={ctDisplay} valueClass={cls(chargingTime)} />
-        <span className={styles.line}>
-          <span className={styles.indent} />
-          <span className={styles.key}>dischargingTime</span>
-          <span className={styles.colon}>: </span>
-          <span className={styles[cls(dischargingTime)]}>{dtDisplay}</span>
-        </span>
-        <span className={styles.brace}>{'}'}</span>
       </div>
     </div>
   )

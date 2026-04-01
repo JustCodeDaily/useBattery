@@ -4,9 +4,7 @@ const INITIAL_STATE = {
   supported: true,
   loading: true,
   level: null,
-  charging: null,
-  chargingTime: null,
-  dischargingTime: null,
+  charging: null
 }
 
 function useBattery() {
@@ -26,8 +24,6 @@ function useBattery() {
         loading: false,
         level: battery.level,
         charging: battery.charging,
-        chargingTime: battery.chargingTime,
-        dischargingTime: battery.dischargingTime,
       })
 
     navigator.getBattery().then((b) => {
@@ -35,16 +31,12 @@ function useBattery() {
       sync()
       b.addEventListener('levelchange', sync)
       b.addEventListener('chargingchange', sync)
-      b.addEventListener('chargingtimechange', sync)
-      b.addEventListener('dischargingtimechange', sync)
     })
 
     return () => {
       if (battery) {
         battery.removeEventListener('levelchange', sync)
         battery.removeEventListener('chargingchange', sync)
-        battery.removeEventListener('chargingtimechange', sync)
-        battery.removeEventListener('dischargingtimechange', sync)
       }
     }
   }, [])
