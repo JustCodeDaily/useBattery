@@ -36,7 +36,7 @@ function BatteryStatus() {
   const { supported, loading, level, charging } = useBattery();
 
   if (!supported) return <p>Battery API not supported in this browser.</p>;
-  if (loading)    return <p>Reading battery…</p>;
+  if (loading) return <p>Reading battery…</p>;
 
   return (
     <div>
@@ -49,15 +49,14 @@ function BatteryStatus() {
 
 ### Return value
 
-| Field | Type | Default | Description |
-|---|---|---|---|
-| `supported` | `boolean` | `true` | Flips to `false` if `navigator.getBattery` doesn't exist |
-| `loading` | `boolean` | `true` | `true` until the first battery read completes |
-| `level` | `number \| null` | `null` | `0.0` to `1.0` — multiply by 100 for percentage |
-| `charging` | `boolean \| null` | `null` | `true` when plugged in |
+| Field       | Type              | Default | Description                                              |
+| ----------- | ----------------- | ------- | -------------------------------------------------------- |
+| `supported` | `boolean`         | `true`  | Flips to `false` if `navigator.getBattery` doesn't exist |
+| `loading`   | `boolean`         | `true`  | `true` until the first battery read completes            |
+| `level`     | `number \| null`  | `null`  | `0.0` to `1.0` — multiply by 100 for percentage          |
+| `charging`  | `boolean \| null` | `null`  | `true` when plugged in                                   |
 
 All fields start as `null` while `loading: true`. If `supported: false`, they stay `null` permanently.
-
 
 ## How it works
 
@@ -77,16 +76,12 @@ navigator.getBattery().then((b) => {
 
   b.addEventListener("levelchange",           sync);
   b.addEventListener("chargingchange",        sync);
-  b.addEventListener("chargingtimechange",    sync);
-  b.addEventListener("dischargingtimechange", sync);
 });
 
 // 3. Cleanup on unmount — removes all 4 listeners, no memory leaks
 return () => {
   battery.removeEventListener("levelchange",           sync);
   battery.removeEventListener("chargingchange",        sync);
-  battery.removeEventListener("chargingtimechange",    sync);
-  battery.removeEventListener("dischargingtimechange", sync);
 };
 ```
 
@@ -94,36 +89,16 @@ Hooks used: `useState` + `useEffect`. Nothing else.
 
 ---
 
-## Project structure
-
-```
-src/
-├── hooks/
-│   └── useBattery.js          ← The hook
-├── components/
-│   ├── BatteryVisual.jsx      ← Battery bar + big percentage number
-│   ├── StatGrid.jsx           ← Charging / Charge-in / Empty-in chips
-│   ├── StateDisplay.jsx       ← Live syntax-highlighted state object
-│   └── SimulatorControls.jsx  ← Slider + toggle buttons
-├── App.jsx                    ← Wires everything, owns simulator state
-├── index.css                  ← Design tokens + global keyframes
-└── main.jsx                   ← React entry point
-```
-
-Every component has a paired `.module.css` file. No inline styles except where level or color must be dynamic.
-
----
-
 ## Browser support
 
-| Browser | Supported |
-|---|---|
-| Chrome / Chromium | ✅ v38+ |
-| Edge (Chromium) | ✅ v79+ |
-| Opera | ✅ v25+ |
-| Firefox | ❌ Dropped in v52 |
-| Safari | ❌ Never |
-| IE | ❌ Never |
+| Browser           | Supported         |
+| ----------------- | ----------------- |
+| Chrome / Chromium | ✅ v38+           |
+| Edge (Chromium)   | ✅ v79+           |
+| Opera             | ✅ v25+           |
+| Firefox           | ❌ Dropped in v52 |
+| Safari            | ❌ Never          |
+| IE                | ❌ Never          |
 
 Requires **HTTPS** in production. Localhost is exempt.
 
