@@ -1,8 +1,41 @@
 .app {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 24px;
   animation: fade-in 0.4s ease both;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1.2fr auto 1fr 1fr;
+  gap: 24px;
+}
+
+.divider {
+  width: 1px;
+  background: var(--border);
+  height: 100%;
+  margin: 0 8px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  .divider {
+    width: 100%;
+    height: 1px;
+    margin: 12px 0;
+  }
 }
 
 .header {

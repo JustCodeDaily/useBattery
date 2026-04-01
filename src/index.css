@@ -36,14 +36,16 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  padding: 48px 16px 80px;
+  padding: 48px 16px;
 }
 
 #root {
   width: 100%;
-  max-width: 520px;
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
 }
 
 @keyframes breathe {
